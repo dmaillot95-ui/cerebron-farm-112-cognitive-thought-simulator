@@ -1,0 +1,15 @@
+name: CEREBRON F112 deterministic canary
+on:
+  push:
+    paths: ["worker/canary.py", ".github/workflows/canary.yml"]
+  workflow_dispatch:
+jobs:
+  canary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python worker/canary.py
+      - uses: actions/upload-artifact@v4
+        with: {name: f112-canary, path: artifacts/result.json}
